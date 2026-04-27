@@ -1,10 +1,4 @@
-# AcademiQ — Student Records Manager
-
-A production-quality React Native mobile application for managing student academic records, built with Expo SDK 53 (compatible with Expo Go SDK 54).
-
-## Overview
-
-AcademiQ is a dark-themed, data-dense student management system that enforces academic validation rules, computes derived standings and risk levels from a single source of truth, and presents multi-view analytics and alert dashboards.
+# Student Records Manager
 
 ## Features
 
@@ -20,7 +14,6 @@ AcademiQ is a dark-themed, data-dense student management system that enforces ac
   - **Settings** — Data management and logic reference
 - **Persistence** — All records stored via AsyncStorage, survive app restarts
 - **Sample Data** — Load 10 diverse pre-built student records
-- **Dark academic aesthetic** — Consistent dark theme with color-coded standing/risk indicators
 
 ## Installation
 
@@ -81,23 +74,6 @@ On the Students tab:
 - Type in the search bar to filter by name, ID, or major
 - Tap filter chips (All / Honors / At Risk / Holds) to filter by status
 - Tap sort chips (Name / GPA / Units / Grad) to sort; tap again to reverse
-
-## How Logic Is Kept Consistent
-
-All derived values are computed by a single set of pure functions in `utils/studentLogic.ts`:
-
-```
-computeAcademicStanding(gpa)     → Honors | Good Standing | Warning | Probation | Disqualified
-computeEnrollmentLoad(units)     → Full-Time | Half-Time | Part-Time | Not Enrolled
-computeRegistrationHold(gpa, dues) → { hasHold, reasons[] }
-computeRiskLevel(gpa, units, dues) → Low | Moderate | High | Critical
-deriveStudentInfo(student)       → All four values at once
-computeAnalytics(students[])     → System-wide metrics
-```
-
-These are **never stored**. Every view calls `deriveStudentInfo(student)` on the fly when it needs derived data. This guarantees that the Students list, Detail modal, Alerts view, and Analytics screen all show identical, up-to-date values — there is no possibility of stale or conflicting derived state.
-
-Validation (`validateStudent`) also lives in this same file and is called identically from both the Add and Edit forms.
 
 ## Project Structure
 
